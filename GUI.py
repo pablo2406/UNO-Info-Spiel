@@ -4,9 +4,9 @@ from helper import get_photo_image
 
 from Spiel import Karte
 
-class GUI:
+class GUI: #Erstellung Klasse GUI mit Attributen
 
-    def __init__(self, canvas) -> None:
+    def __init__(self, canvas) -> None: 
 
         self.canvas = canvas
 
@@ -19,33 +19,34 @@ class GUI:
         self.create_static_elements()
 
 
-    def initialize_hands(self, spieler_hand) -> None:
+    def initialize_hands(self, spieler_hand) -> None:  #Spielerhand und CPU-Hand wird erstellt mit Position
 
-        HAND_LAENGE = len(spieler_hand.karten)
-        self.KARTEN_OVERLAP = 75
-        HAENDE_X_POSITION = (1920 / 2) - ((HAND_LAENGE - 1) * self.KARTEN_OVERLAP) / 2
-        self.SPIELER_HAND_Y_POSITION = 1080 - spieler_hand.karten[0].height * 0.75
-        self.CPU_HAND_Y_POSITION = spieler_hand.karten[0].height * 0.75
+        HAND_LAENGE = len(spieler_hand.karten) #Anzahl der Karten in der Spielerhand, um Position zu bestimmen
+        self.KARTEN_OVERLAP = 75 #Karten sollen übereinander liegen
+        HAENDE_X_POSITION = (1920 / 2) - ((HAND_LAENGE - 1) * self.KARTEN_OVERLAP) / 2 #Position Spielerhand X-Achse 
+        self.SPIELER_HAND_Y_POSITION = 1080 - spieler_hand.karten[0].height * 0.75 #Position Spielerhand Y-Achse
+        self.CPU_HAND_Y_POSITION = spieler_hand.karten[0].height * 0.75 # Position Y-Achse CPU-Hand
 
 
         for karte_index in range(HAND_LAENGE):
 
-            new_x = HAENDE_X_POSITION + karte_index * self.KARTEN_OVERLAP
+            new_x = HAENDE_X_POSITION + karte_index * self.KARTEN_OVERLAP #X-Achse Position abhängig von den Karten in der Hand
 
             image = self.canvas.create_image(new_x, self.SPIELER_HAND_Y_POSITION, image=spieler_hand.karten[karte_index].bild)
-            self.spieler_karten.append(image)
+            self.spieler_karten.append(image) #Image in Canvas als Platzhalter für Spielerkarten
 
             self.canvas.tag_bind(image, "<Button-1>", lambda event, img=image: self.click_aktualisieren(img))
+            #Man möchte ein Event herbeiführen indem man ein Klick tätigt
         
 
-        self.backside_image = get_photo_image("UNO Karten/UNO Karte Rückseite .jpg", (spieler_hand.karten[0].width, spieler_hand.karten[0].height))
-
+        self.backside_image = get_photo_image("UNO Karten/UNO Karte Rückseite.jpg", (spieler_hand.karten[0].width, spieler_hand.karten[0].height))
+           #Kartenrückseite für die CPU-Hand bestimmen mit Dateipfad
         for karte_index in range(HAND_LAENGE):
 
             new_x = HAENDE_X_POSITION + karte_index * self.KARTEN_OVERLAP
 
             image = self.canvas.create_image(new_x, self.CPU_HAND_Y_POSITION, image=self.backside_image)
-            self.cpu_karten.append(image)
+            self.cpu_karten.append(image) #Position vom Image in Canvas für CPU-Karten Rückseiten
 
     
     def click_aktualisieren(self, image) -> None:
