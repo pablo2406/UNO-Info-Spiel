@@ -49,54 +49,54 @@ class GUI: #Erstellung Klasse GUI mit Attributen
             self.cpu_karten.append(image) #Position vom Image in Canvas für CPU-Karten Rückseiten
 
     
-    def click_aktualisieren(self, image) -> None:
+    def click_aktualisieren(self, image) -> None: #Klick wird verarbeitet und Wert zugewiesen
 
         if self.zuletzt_geklickte_karte_ind is not None: return
 
         self.zuletzt_geklickte_karte_ind = self.spieler_karten.index(image)
 
 
-    def lege_spieler_karte(self, index) -> None:
+    def lege_spieler_karte(self, index) -> None: #Methode, um Karte von Spielerkarten auf Ablagefläche zu legen
 
-        self.canvas.delete(self.gelegte_karte)
+        self.canvas.delete(self.gelegte_karte) 
 
-        self.gelegte_karte = self.spieler_karten.pop(index)
+        self.gelegte_karte = self.spieler_karten.pop(index) #Entfernt Element(Karte) aus Liste der Spielerhand
 
-        ablage_coords = self.canvas.coords(self.ablageflaeche)[:2]
-        self.canvas.moveto(self.gelegte_karte, ablage_coords[0] - 81, ablage_coords[1] - 118)
+        ablage_coords = self.canvas.coords(self.ablageflaeche)[:2] #Bestimmung der Koordinaten der Ablagefläche
+        self.canvas.moveto(self.gelegte_karte, ablage_coords[0] - 81, ablage_coords[1] - 118) #Koordinaten Linke obere Ecke
         self.spieler_hand_position_aktualisieren()
 
 
-    def lege_cpu_karte(self, cpu_karte) -> None:
+    def lege_cpu_karte(self, cpu_karte) -> None: #Methode, um CPU Karte auf Ablagefläche zu legen
 
-        self.canvas.delete(self.gelegte_karte)
+        self.canvas.delete(self.gelegte_karte) #Aktuelle Karte auf Ablegefläche entfernen
 
         ablage_coords = self.canvas.coords(self.ablageflaeche)[:2]
-        self.gelegte_karte = self.canvas.create_image(ablage_coords[0], ablage_coords[1], image=cpu_karte.bild)
+        self.gelegte_karte = self.canvas.create_image(ablage_coords[0], ablage_coords[1], image=cpu_karte.bild)#Koordinaten Mitte der Karte
 
-        self.canvas.delete(self.cpu_karten[-1])
-        self.cpu_karten.pop(-1)
+        self.canvas.delete(self.cpu_karten[-1]) #Bild aus CPU Karten entfernen
+        self.cpu_karten.pop(-1) #Aus Liste entfernen
 
         self.cpu_hand_position_aktualisieren()
 
 
-    def spieler_hand_position_aktualisieren(self) -> None:
+    def spieler_hand_position_aktualisieren(self) -> None: #Position der Spielerkarten aktualisieren (andere Anzahl)
 
         HAND_LAENGE = len(self.spieler_karten)
         HAENDE_X_POSITION = (1920 / 2) - ((HAND_LAENGE - 1) * self.KARTEN_OVERLAP) / 2
 
-        for karte_index in range(HAND_LAENGE):
+        for karte_index in range(HAND_LAENGE): #Abzählung von 0 bis Handlänge - 1
 
             new_x = HAENDE_X_POSITION + karte_index * self.KARTEN_OVERLAP
             self.canvas.moveto(self.spieler_karten[karte_index], new_x - 81, self.SPIELER_HAND_Y_POSITION - 118)
 
 
-    def cpu_hand_position_aktualisieren(self) -> None:
+    def cpu_hand_position_aktualisieren(self) -> None: #Positionen der CPU-Karten aktualisieren (abhängig Anzahl)
 
         HAND_LAENGE = len(self.cpu_karten)
         HAENDE_X_POSITION = (1920 / 2) - ((HAND_LAENGE - 1) * self.KARTEN_OVERLAP) / 2
 
-        for karte_index in range(HAND_LAENGE):
+        for karte_index in range(HAND_LAENGE): #Abzählung von 0 bis Handlänge -1
 
             new_x = HAENDE_X_POSITION + karte_index * self.KARTEN_OVERLAP
             self.canvas.moveto(self.cpu_karten[karte_index], new_x - 81, self.CPU_HAND_Y_POSITION - 118)
@@ -104,18 +104,15 @@ class GUI: #Erstellung Klasse GUI mit Attributen
 
     def create_static_elements(self) -> None:
 
-        self.ablage_image = get_photo_image("UNO Karten/UNO Ablegefläche.jpg", (200, 275))
+        self.ablage_image = get_photo_image("UNO Karten/UNO Ablegefläche.jpg", (200, 275)) #Erstellung von Rand der Ablagefläche mit Funktion aus Helperdatei
         self.ablageflaeche = self.canvas.create_image((1920 / 2) + 300, (1080 / 2), image=self.ablage_image)
 
-        self.deck_image = get_photo_image("UNO Karten/UNO Karte Rückseite .jpg", (163, 237))
+        self.deck_image = get_photo_image("UNO Karten/UNO Karte Rückseite .jpg", (163, 237)) #Erstellung von Rand der Ablagefläche mit Funktion mit Helperdatei
         self.canvas.create_image((1920 / 2) - 300, (1080 / 2), image=self.deck_image)
 
-
-    def update_player_card_pos(self) -> None:
-
-        # auf Basis von Anzahl der Karten neue Positionen ausrechnen
+     
+    
         # Positionen updaten -> self.canvas.move(id_von_Karte, x_difference, y_difference) oder move_to()
 
+      
         
-
-        pass
