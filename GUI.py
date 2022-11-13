@@ -107,7 +107,7 @@ class GUI: #Erstellung Klasse GUI mit Attributen
         self.ablage_image = get_photo_image("UNO Karten/UNO Ablegefläche.jpg", (200, 275)) #Erstellung von Rand der Ablagefläche mit Funktion aus Helperdatei
         self.ablageflaeche = self.canvas.create_image((1920 / 2) + 300, (1080 / 2), image=self.ablage_image)
 
-        self.deck_image = get_photo_image("UNO Karten/UNO Karte Rückseite .jpg", (163, 237)) #Erstellung von Rand der Ablagefläche mit Funktion mit Helperdatei
+        self.deck_image = get_photo_image("UNO Karten/UNO Karte Rückseite.jpg", (163, 237)) #Erstellung von Rand der Ablagefläche mit Funktion mit Helperdatei
         self.canvas.create_image((1920 / 2) - 300, (1080 / 2), image=self.deck_image)
 
      
